@@ -480,7 +480,7 @@ void set_motor_q(int id) {}
 void set_motor_q_up(int id) {}
 void set_motor_q_sel(int id) {}
 #if RUN_WEBOTS
-float rc_scale_all=0.8;
+float rc_scale_all=0.8*TIME_STEP/10;
 #define KEY_W 87
 #define KEY_S 83
 #define KEY_A 65

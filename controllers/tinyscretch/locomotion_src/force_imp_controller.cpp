@@ -31,7 +31,11 @@ void force_control_and_dis_pose(float dt)//底层==>位力混控制  站立步�
     if(robotwb.state_gait==2){
         ik_hip_protect(&robotwb.arm_epos_h_exp);
         //IK output
+#if RUN_WEBOTS
+        float kp_gain[2]={0.07,0.1};
+#else
         float kp_gain[2]={0.007,0.01};
+#endif
         if( robotwb.arm_control_mode==ARM_M_E&&!robotwb.reset_arm){
             kp_gain[0]=0.8;
             kp_gain[1]=0.8;

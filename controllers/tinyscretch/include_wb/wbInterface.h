@@ -27,7 +27,7 @@ extern WbDeviceTag GPS;
 extern WbDeviceTag RGB_F,RGB_H0;
 extern WbDeviceTag LIDAR_F;
 extern WbDeviceTag RANGE_F;
-#define TIME_STEP   10//ms
+#define TIME_STEP   20//ms
 
 void webots_device_init(void);
 void update_lidar(void);

@@ -1,6 +1,7 @@
 #include "wbInterface.h"
 #include "robotmath.h"
 #include "include.h"
+#include "spi_node.h"
 WbDeviceTag motor_wt[4], motor_armt[6], motor_headt[2], motor_capt[2];
 WbDeviceTag posensor_wt[4], posensor_armt[6], posensor_headt[2], posensor_capt[2];
 WbDeviceTag IMU;
@@ -68,7 +69,7 @@ WbImageRef init_display(WbDeviceTag display) {
 WbImageRef init_display_human(WbDeviceTag display) {
     wb_display_fill_rectangle(display, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
     wb_display_set_color(display, BLACK);
-    wb_display_draw_text(display, "BITHumanoid", DISPLAY_RECTANGLE_Y_OFFSET, DISPLAY_RECTANGLE_Y_OFFSET);
+    wb_display_draw_text(display, "OpenButler", DISPLAY_RECTANGLE_Y_OFFSET, DISPLAY_RECTANGLE_Y_OFFSET);
     wb_display_set_color(display, BLUE);
 
     WbImageRef background = wb_display_image_copy(display, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
@@ -80,14 +81,15 @@ WbImageRef init_display_human(WbDeviceTag display) {
 void update_display(WbDeviceTag display, WbImageRef background, const float *lidar_values, int lms291_width) {
     wb_display_image_paste(display, background, 0, 0, false);
     int i;
-    double angle = -3.141596/2;
-
+    double angle = 3.141596/2;
+    //printf("%d\n",lms291_width);
     for (i = 0; i < lms291_width; i++) {
-        float x = lidar_values[i] * 40 * sin(angle);
-        float y = lidar_values[i] * 40 * cos(angle);
+        float x = lidar_values[i] * DISPLAY_MAX_RANGE * sin(angle);
+        float y = lidar_values[i] * DISPLAY_MAX_RANGE * cos(angle);
         wb_display_draw_pixel(display, DISPLAY_WIDTH / 2 + x,
-            (DISPLAY_HEIGHT - DISPLAY_MAX_RANGE) / 2 + DISPLAY_RECTANGLE_Y_OFFSET + y);
+            (DISPLAY_HEIGHT ) / 2 + DISPLAY_RECTANGLE_Y_OFFSET + y);
         angle += 3.141596 / lms291_width;
+        webots_mem.lidar_dis[i]=lidar_values[i];
     }
 }
 

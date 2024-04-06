@@ -70,9 +70,9 @@ void ik_hip_protect(END_POS* eepos)
    // printf("limit=%f %f\n",robotwb.arm_epos_h_exp.x,robotwb.arm_epos_h_exp.y);
 #endif
     if(eepos->x<line_x)
-        eepos->x=line_x;
+        eepos->x=line_x+0.005;
     if(eepos->y>line_y)
-        eepos->y=line_y;
+        eepos->y=line_y-0.005;
 
     double x = eepos->x; // 初始点坐标
     double y = eepos->y;

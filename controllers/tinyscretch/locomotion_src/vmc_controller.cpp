@@ -88,10 +88,13 @@ void traj_planner(float dt)
 #endif
     //base
     float w_yaw=LIMIT(dead(fabs(robotwb.base_rate_exp_rc)/0.9,0.2)*0.5,0,1);
-
+#if RUN_WEBOTS
+    DigitalLPF(robotwb.base_vel_b_exp_rc.x*(1-w_yaw), &robotwb.base_vel_b_exp_rc_flt.x, 2.9, dt);
+    DigitalLPF(robotwb.base_rate_exp_rc, &robotwb.base_rate_exp_rc_flt, 2.9, dt);
+#else
     DigitalLPF(robotwb.base_vel_b_exp_rc.x*(1-w_yaw), &robotwb.base_vel_b_exp_rc_flt.x, 0.9, dt);
     DigitalLPF(robotwb.base_rate_exp_rc, &robotwb.base_rate_exp_rc_flt, 0.9, dt);
-
+#endif
     //arm-planner-demo
 
 #if 0//hip mode test
